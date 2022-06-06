@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "colors": "^1.4.0",
+    "dotenv": "^16.0.1",
     "fetch": "^1.1.0",
     "inquirer": "^8.2.4",
     "request": "^2.88.2"

@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+require('dotenv').config();
 class Busquedas{
     historial = [];
 
@@ -7,17 +7,28 @@ class Busquedas{
         // leer db si existe
     }
 
+    get paramsMapBox(){
+        return {
+            //'access_token': 'pk.eyJ1IjoiYmVpc3MiLCJhIjoiY2w0MzFjY3MxMGJqMDNibjI5OGk4cHdlbiJ9.fE1z0G7TLY5mUDICuEOpvA',
+            'access_token': process.env.MAPBOX_KEY,
+            'limit': 5,
+            'language': 'es'
+        }
+    }
+
     async ciudad(lugar = ''){
         try{
             //peticion http
-            //console.log('ciudad ', lugar);
-            const resp= await axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/%C3%B1u%C3%B1oa.json?proximity=-73.990593%2C40.740121&language=es&access_token=pk.eyJ1IjoiYmVpc3MiLCJhIjoiY2w0MzFjY3MxMGJqMDNibjI5OGk4cHdlbiJ9.fE1z0G7TLY5mUDICuEOpvA')
+            const instance = axios.create({
+                baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
+                params: this.paramsMapBox
+            });
+            const resp = await instance.get();
             console.log(resp.data);
             return []; //retorna lugares
         }catch(error){
             return [];  
-        }
-       
+        }       
     }
 }
 
