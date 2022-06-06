@@ -23,11 +23,18 @@ class Busquedas{
                 baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
                 params: this.paramsMapBox
             });
+
             const resp = await instance.get();
-            console.log(resp.data);
-            return []; //retorna lugares
+           
+            return resp.data.features.map( lugar => ({
+                id: lugar.id,
+                nombre: lugar.place_name,
+                lon: lugar.center[0],
+                lat: lugar.center[1]
+            }));
+
         }catch(error){
-            return [];  
+            return 'errorrrrrrrrrrrrrrr';  
         }       
     }
 }
